@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "post-slider/slider",
+    "title": "Post Slider",
+    "category": "widgets",
+    "icon": "slides",
+    "description": "Слайдер постов блога",
+    "keywords": ["slider", "posts", "blog"],
+    "version": "1.0.0",
+    "textdomain": "post-slider",
+    "attributes": {
+        "postsCount": {
+            "type": "number",
+            "default": 5
+        },
+        "order": {
+            "type": "string",
+            "default": "DESC"
+        },
+        "orderBy": {
+            "type": "string",
+            "default": "date"
+        },
+        "categories": {
+            "type": "array",
+            "default": []
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["full"]
+    },
+    "editorScript": "file:./index.js"
+} 

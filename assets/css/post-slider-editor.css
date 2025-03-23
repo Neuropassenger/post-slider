@@ -1,0 +1,40 @@
+/**
+ * Стили для редактора Gutenberg
+ */
+.post-slider-editor {
+    min-height: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+}
+
+.post-slider-editor-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 260px;
+}
+
+.post-slider-editor-placeholder {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+}
+
+.post-slider-editor-placeholder h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.post-slider-editor-placeholder p {
+    margin: 10px 0;
+    color: #555;
+} 
