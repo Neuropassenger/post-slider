@@ -1,0 +1,22 @@
+{
+  "name": "post-slider",
+  "version": "1.0.0",
+  "description": "Слайдер постов WordPress",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "slider"
+  ],
+  "author": "DevGale",
+  "license": "GPL-2.0+",
+  "devDependencies": {
+    "@wordpress/scripts": "^24.0.0"
+  }
+} 

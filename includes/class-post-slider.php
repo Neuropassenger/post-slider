@@ -19,12 +19,9 @@ class Post_Slider {
      * Регистрация блока Gutenberg
      */
     public function register_block() {
-        register_block_type(
-            POST_SLIDER_PATH . 'blocks/post-slider',
-            array(
-                'render_callback' => array($this, 'render_post_slider')
-            )
-        );
+        register_block_type(POST_SLIDER_PATH . 'blocks/post-slider/block.json', array(
+            'render_callback' => 'post_slider_render_callback'
+        ));
     }
     
     /**
@@ -51,14 +48,6 @@ class Post_Slider {
      * Подключение стилей и скриптов для редактора Gutenberg
      */
     public function enqueue_editor_assets() {
-        wp_enqueue_script(
-            'post-slider-editor',
-            POST_SLIDER_URL . 'assets/js/post-slider-editor.js',
-            array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data'),
-            POST_SLIDER_VERSION,
-            true
-        );
-        
         wp_enqueue_style(
             'post-slider-editor-style',
             POST_SLIDER_URL . 'assets/css/post-slider-editor.css',

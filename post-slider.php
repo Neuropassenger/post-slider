@@ -20,6 +20,17 @@ define('POST_SLIDER_VERSION', '1.0.0');
 // Подключение файлов плагина
 require_once POST_SLIDER_PATH . 'includes/class-post-slider.php';
 
+/**
+ * Функция обратного вызова для рендеринга блока слайдера
+ *
+ * @param array $attributes Атрибуты блока
+ * @return string HTML код блока
+ */
+function post_slider_render_callback($attributes) {
+    $post_slider = new Post_Slider();
+    return $post_slider->render_post_slider($attributes);
+}
+
 // Инициализация плагина
 function post_slider_init() {
     $post_slider = new Post_Slider();
