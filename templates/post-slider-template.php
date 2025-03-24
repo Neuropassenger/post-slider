@@ -1,12 +1,12 @@
 <?php
 /**
- * Шаблон для отображения слайдера постов
+ * Template for displaying posts slider
  *
- * @var array $posts Массив постов для отображения
- * @var array $attributes Атрибуты блока
+ * @var array $posts Array of posts to display
+ * @var array $attributes Block attributes
  */
 
-// Выход при прямом доступе
+// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }

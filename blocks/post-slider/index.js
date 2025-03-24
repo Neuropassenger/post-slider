@@ -19,7 +19,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import metadata from './block.json';
 
 /**
- * Регистрация блока слайдера постов
+ * Register posts slider block
  */
 registerBlockType(metadata.name, {
     /**
@@ -28,7 +28,7 @@ registerBlockType(metadata.name, {
     ...metadata,
     
     /**
-     * Функция редактирования блока
+     * Block edit function
      */
     edit: ({ attributes, setAttributes }) => {
         const { postsCount, order, orderBy, categories, isRandomPosts } = attributes;
@@ -36,7 +36,7 @@ registerBlockType(metadata.name, {
             className: 'post-slider-editor',
         });
         
-        // Получение категорий для настроек
+        // Get categories for settings
         const availableCategories = useSelect(
             (select) => {
                 return select(coreStore).getEntityRecords('taxonomy', 'category', {
@@ -46,7 +46,7 @@ registerBlockType(metadata.name, {
             []
         );
         
-        // Формирование опций для селектора категорий
+        // Create options for category selector
         const categoriesOptions = availableCategories
             ? availableCategories.map((category) => ({
                 label: category.name,
@@ -57,9 +57,9 @@ registerBlockType(metadata.name, {
         return (
             <div {...blockProps}>
                 <InspectorControls>
-                    <PanelBody title={__('Настройки слайдера', 'post-slider')} initialOpen={true}>
+                    <PanelBody title={__('Slider Settings', 'post-slider')} initialOpen={true}>
                         <RangeControl
-                            label={__('Количество постов', 'post-slider')}
+                            label={__('Number of Posts', 'post-slider')}
                             value={postsCount}
                             onChange={(value) => setAttributes({ postsCount: value })}
                             min={1}
@@ -67,8 +67,8 @@ registerBlockType(metadata.name, {
                         />
                         
                         <ToggleControl
-                            label={__('Случайные статьи', 'post-slider')}
-                            help={isRandomPosts ? __('Отображаются случайные статьи со всего сайта', 'post-slider') : __('Отображаются статьи согласно настройкам сортировки', 'post-slider')}
+                            label={__('Random Posts', 'post-slider')}
+                            help={isRandomPosts ? __('Displaying random posts from the entire site', 'post-slider') : __('Displaying posts according to sorting settings', 'post-slider')}
                             checked={isRandomPosts}
                             onChange={(value) => setAttributes({ isRandomPosts: value })}
                         />
@@ -76,22 +76,22 @@ registerBlockType(metadata.name, {
                         {!isRandomPosts && (
                             <>
                                 <SelectControl
-                                    label={__('Сортировка', 'post-slider')}
+                                    label={__('Order', 'post-slider')}
                                     value={order}
                                     options={[
-                                        { label: __('По убыванию', 'post-slider'), value: 'DESC' },
-                                        { label: __('По возрастанию', 'post-slider'), value: 'ASC' }
+                                        { label: __('Descending', 'post-slider'), value: 'DESC' },
+                                        { label: __('Ascending', 'post-slider'), value: 'ASC' }
                                     ]}
                                     onChange={(value) => setAttributes({ order: value })}
                                 />
                                 
                                 <SelectControl
-                                    label={__('Сортировать по', 'post-slider')}
+                                    label={__('Order By', 'post-slider')}
                                     value={orderBy}
                                     options={[
-                                        { label: __('Дате', 'post-slider'), value: 'date' },
-                                        { label: __('Заголовку', 'post-slider'), value: 'title' },
-                                        { label: __('Популярности', 'post-slider'), value: 'comment_count' }
+                                        { label: __('Date', 'post-slider'), value: 'date' },
+                                        { label: __('Title', 'post-slider'), value: 'title' },
+                                        { label: __('Popularity', 'post-slider'), value: 'comment_count' }
                                     ]}
                                     onChange={(value) => setAttributes({ orderBy: value })}
                                 />
@@ -99,7 +99,7 @@ registerBlockType(metadata.name, {
                                 {categoriesOptions.length > 0 && (
                                     <SelectControl
                                         multiple
-                                        label={__('Категории', 'post-slider')}
+                                        label={__('Categories', 'post-slider')}
                                         value={categories}
                                         options={categoriesOptions}
                                         onChange={(value) => setAttributes({ categories: value })}
@@ -112,12 +112,12 @@ registerBlockType(metadata.name, {
                 
                 <div className="post-slider-editor-preview">
                     <div className="post-slider-editor-placeholder">
-                        <h2>{__('Слайдер постов', 'post-slider')}</h2>
-                        <p>{__('Отображает слайдер с последними постами блога.', 'post-slider')}</p>
+                        <h2>{__('Posts Slider', 'post-slider')}</h2>
+                        <p>{__('Displays a slider with the latest blog posts.', 'post-slider')}</p>
                         {isRandomPosts ? (
-                            <p>{__(`Отображаются ${postsCount} случайных статей со всего сайта`, 'post-slider')}</p>
+                            <p>{__(`Displaying ${postsCount} random posts from the entire site`, 'post-slider')}</p>
                         ) : (
-                            <p>{__(`Выбрано постов: ${postsCount}`, 'post-slider')}</p>
+                            <p>{__(`Selected posts: ${postsCount}`, 'post-slider')}</p>
                         )}
                     </div>
                 </div>
@@ -126,7 +126,7 @@ registerBlockType(metadata.name, {
     },
     
     /**
-     * Функция сохранения блока (пустая, т.к. рендер на стороне сервера)
+     * Block save function (empty because rendering is done on server side)
      */
     save: () => {
         return null;

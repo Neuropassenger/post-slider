@@ -5,7 +5,7 @@
     "title": "Post Slider",
     "category": "widgets",
     "icon": "slides",
-    "description": "Слайдер постов блога",
+    "description": "Blog posts slider",
     "keywords": ["slider", "posts", "blog"],
     "version": "1.0.0",
     "textdomain": "post-slider",

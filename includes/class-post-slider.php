@@ -1,22 +1,22 @@
 <?php
 /**
- * Основной класс плагина Post Slider
+ * Main Post Slider plugin class
  */
 class Post_Slider {
     /**
-     * Инициализация плагина
+     * Plugin initialization
      */
     public function init() {
-        // Регистрация стилей и скриптов
+        // Register styles and scripts
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
         add_action('enqueue_block_editor_assets', array($this, 'enqueue_editor_assets'));
         
-        // Регистрация блока Gutenberg
+        // Register Gutenberg block
         add_action('init', array($this, 'register_block'));
     }
     
     /**
-     * Регистрация блока Gutenberg
+     * Register Gutenberg block
      */
     public function register_block() {
         register_block_type(POST_SLIDER_PATH . 'blocks/post-slider/block.json', array(
@@ -25,7 +25,7 @@ class Post_Slider {
     }
     
     /**
-     * Подключение стилей и скриптов для фронтенда
+     * Enqueue frontend styles and scripts
      */
     public function enqueue_frontend_assets() {
         /* wp_enqueue_style(
@@ -45,7 +45,7 @@ class Post_Slider {
     }
     
     /**
-     * Подключение стилей и скриптов для редактора Gutenberg
+     * Enqueue Gutenberg editor styles and scripts
      */
     public function enqueue_editor_assets() {
         wp_enqueue_style(
@@ -57,10 +57,10 @@ class Post_Slider {
     }
     
     /**
-     * Рендер блока слайдера на фронтенде
+     * Render slider block on frontend
      *
-     * @param array $attributes Атрибуты блока
-     * @return string HTML код блока
+     * @param array $attributes Block attributes
+     * @return string Block HTML code
      */
     public function render_post_slider($attributes) {
         $args = array(
@@ -68,16 +68,16 @@ class Post_Slider {
             'post_status'    => 'publish',
         );
         
-        // Проверяем, включен ли режим случайных постов
+        // Check if random posts mode is enabled
         if (isset($attributes['isRandomPosts']) && $attributes['isRandomPosts']) {
-            // Если включен режим случайных постов, используем случайную сортировку
+            // If random posts mode is enabled, use random sorting
             $args['orderby'] = 'rand';
         } else {
-            // Иначе используем стандартные настройки сортировки
+            // Otherwise use standard sorting settings
             $args['order'] = isset($attributes['order']) ? $attributes['order'] : 'DESC';
             $args['orderby'] = isset($attributes['orderBy']) ? $attributes['orderBy'] : 'date';
             
-            // Фильтрация по категории, если указана
+            // Filter by category if specified
             if (!empty($attributes['categories'])) {
                 $args['category__in'] = $attributes['categories'];
             }
@@ -87,7 +87,7 @@ class Post_Slider {
         $posts = $posts_query->posts;
         
         if (empty($posts)) {
-            return '<div class="post-slider-empty">Нет доступных постов</div>';
+            return '<div class="post-slider-empty">No posts available</div>';
         }
         
         ob_start();

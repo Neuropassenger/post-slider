@@ -1,37 +1,37 @@
 <?php
 /**
  * Plugin Name: Post Slider
- * Description: Gutenberg блок для отображения слайдера с постами блога
+ * Description: Gutenberg block for displaying blog posts slider
  * Version: 1.0.21
- * Author: DevGale
+ * Author: Oleg Sokolov
  * Text Domain: post-slider
  */
 
-// Выход при прямом доступе
+// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Определение констант плагина
+// Define plugin constants
 define('POST_SLIDER_PATH', plugin_dir_path(__FILE__));
 define('POST_SLIDER_URL', plugin_dir_url(__FILE__));
 define('POST_SLIDER_VERSION', '1.0.21');
 
-// Подключение файлов плагина
+// Include plugin files
 require_once POST_SLIDER_PATH . 'includes/class-post-slider.php';
 
 /**
- * Функция обратного вызова для рендеринга блока слайдера
+ * Callback function for rendering the slider block
  *
- * @param array $attributes Атрибуты блока
- * @return string HTML код блока
+ * @param array $attributes Block attributes
+ * @return string Block HTML code
  */
 function post_slider_render_callback($attributes) {
     $post_slider = new Post_Slider();
     return $post_slider->render_post_slider($attributes);
 }
 
-// Инициализация плагина
+// Plugin initialization
 function post_slider_init() {
     $post_slider = new Post_Slider();
     $post_slider->init();
