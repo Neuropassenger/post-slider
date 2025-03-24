@@ -28,12 +28,12 @@ class Post_Slider {
      * Подключение стилей и скриптов для фронтенда
      */
     public function enqueue_frontend_assets() {
-        wp_enqueue_style(
+        /* wp_enqueue_style(
             'post-slider-style',
             POST_SLIDER_URL . 'assets/css/post-slider.css',
             array(),
             POST_SLIDER_VERSION
-        );
+        ); */
         
         wp_enqueue_script(
             'post-slider-script',

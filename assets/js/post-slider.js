@@ -42,7 +42,7 @@
          * Запуск автоматического прокручивания слайдов
          */
         function startAutoSlide() {
-            interval = setInterval(nextSlide, 5000);
+            interval = setInterval(nextSlide, 25000);
         }
         
         /**
