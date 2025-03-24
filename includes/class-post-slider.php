@@ -66,13 +66,21 @@ class Post_Slider {
         $args = array(
             'posts_per_page' => isset($attributes['postsCount']) ? absint($attributes['postsCount']) : 5,
             'post_status'    => 'publish',
-            'order'          => isset($attributes['order']) ? $attributes['order'] : 'DESC',
-            'orderby'        => isset($attributes['orderBy']) ? $attributes['orderBy'] : 'date',
         );
         
-        // Фильтрация по категории, если указана
-        if (!empty($attributes['categories'])) {
-            $args['category__in'] = $attributes['categories'];
+        // Проверяем, включен ли режим случайных постов
+        if (isset($attributes['isRandomPosts']) && $attributes['isRandomPosts']) {
+            // Если включен режим случайных постов, используем случайную сортировку
+            $args['orderby'] = 'rand';
+        } else {
+            // Иначе используем стандартные настройки сортировки
+            $args['order'] = isset($attributes['order']) ? $attributes['order'] : 'DESC';
+            $args['orderby'] = isset($attributes['orderBy']) ? $attributes['orderBy'] : 'date';
+            
+            // Фильтрация по категории, если указана
+            if (!empty($attributes['categories'])) {
+                $args['category__in'] = $attributes['categories'];
+            }
         }
         
         $posts_query = new WP_Query($args);

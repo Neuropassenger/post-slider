@@ -9,7 +9,7 @@
         // Настройки по умолчанию
         this.settings = $.extend({
             slideDuration: 10000,      // Время показа слайда (10 секунд)
-            animationDuration: 1200,   // Длительность анимации
+            animationDuration: 1200,   // Длительность базовой анимации (возвращаем к 1200)
             container: '.post-slider',
             slideSelector: '.post-slide',
             prevBtn: '.post-slider-prev',
@@ -46,13 +46,33 @@
             this.setupSlides();
             this.bindEvents();
             
-            // Показываем первый слайд сразу же делаем его видимым
-            this.$slides.eq(0).css({
-                'opacity': '1',
+            // Показываем первый слайд сразу же делаем его видимым с эффектом отдаления
+            var $firstSlide = this.$slides.eq(0);
+            
+            // Устанавливаем начальное состояние
+            $firstSlide.css({
+                'opacity': '0',
                 'z-index': '2',
+                'transform': 'scale(1.15)',
+                'filter': 'blur(5px)',
+                'transition': 'none'
+            });
+            
+            // Принудительная перерисовка
+            this.$container[0].offsetHeight;
+            
+            // Запускаем анимацию для первого слайда
+            var zoomOutDuration = this.settings.slideDuration; // Изменяем на длительность отображения слайда
+            
+            $firstSlide.css({
+                'transition': 'opacity ' + this.settings.animationDuration + 'ms ease, transform ' + 
+                               zoomOutDuration + 'ms cubic-bezier(0.01, 0.01, 0.05, 0.95), filter ' + 
+                               this.settings.animationDuration + 'ms ease',
+                'opacity': '1',
                 'transform': 'scale(1)',
                 'filter': 'blur(0)'
             }).addClass('active');
+            
             this.currentIndex = 0;
             
             // Запускаем автопрокрутку, если она включена
@@ -203,11 +223,11 @@
             var $currentSlide = this.$slides.eq(fromIndex);
             var $nextSlide = this.$slides.eq(toIndex);
             
-            // Подготовка нового слайда
+            // Подготовка нового слайда - начнем с увеличенного вида для эффекта отдаления
             $nextSlide.css({
                 'opacity': '0',
                 'z-index': '2',
-                'transform': 'scale(1.05)',
+                'transform': 'scale(1.15)', // Начинаем с увеличенного масштаба для эффекта отдаления
                 'filter': 'blur(5px)',
                 'transition': 'none'
             });
@@ -226,13 +246,15 @@
                 'z-index': '1'
             });
             
-            // Анимация нового слайда
+            // Анимация нового слайда - добавляем медленное отдаление
+            var zoomOutDuration = this.settings.slideDuration; // Изменяем на длительность отображения слайда
+            
             $nextSlide.css({
                 'transition': 'opacity ' + this.settings.animationDuration + 'ms ease, transform ' + 
-                               this.settings.animationDuration + 'ms ease, filter ' + 
-                               this.settings.animationDuration + 'ms ease',
+                               zoomOutDuration + 'ms cubic-bezier(0.01, 0.01, 0.05, 0.95), filter ' + 
+                               this.settings.animationDuration + 'ms ease', // Используем cubic-bezier для плавного замедления
                 'opacity': '1',
-                'transform': 'scale(1)',
+                'transform': 'scale(1)', // Конечный масштаб 1, создавая эффект отдаления
                 'filter': 'blur(0)'
             }).addClass('active');
             
@@ -244,7 +266,7 @@
                 
                 self.isAnimating = false;
                 console.log('Переход завершен: ' + fromIndex + ' -> ' + toIndex);
-            }, this.settings.animationDuration);
+            }, this.settings.animationDuration); // Используем обычную длительность анимации
         },
         
         // Запуск автопрокрутки

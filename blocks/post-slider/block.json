@@ -25,6 +25,10 @@
         "categories": {
             "type": "array",
             "default": []
+        },
+        "isRandomPosts": {
+            "type": "boolean",
+            "default": false
         }
     },
     "supports": {

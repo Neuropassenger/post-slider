@@ -7,7 +7,8 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { 
     PanelBody, 
     RangeControl,
-    SelectControl
+    SelectControl,
+    ToggleControl
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -30,7 +31,7 @@ registerBlockType(metadata.name, {
      * Функция редактирования блока
      */
     edit: ({ attributes, setAttributes }) => {
-        const { postsCount, order, orderBy, categories } = attributes;
+        const { postsCount, order, orderBy, categories, isRandomPosts } = attributes;
         const blockProps = useBlockProps({
             className: 'post-slider-editor',
         });
@@ -65,35 +66,46 @@ registerBlockType(metadata.name, {
                             max={10}
                         />
                         
-                        <SelectControl
-                            label={__('Сортировка', 'post-slider')}
-                            value={order}
-                            options={[
-                                { label: __('По убыванию', 'post-slider'), value: 'DESC' },
-                                { label: __('По возрастанию', 'post-slider'), value: 'ASC' }
-                            ]}
-                            onChange={(value) => setAttributes({ order: value })}
+                        <ToggleControl
+                            label={__('Случайные статьи', 'post-slider')}
+                            help={isRandomPosts ? __('Отображаются случайные статьи со всего сайта', 'post-slider') : __('Отображаются статьи согласно настройкам сортировки', 'post-slider')}
+                            checked={isRandomPosts}
+                            onChange={(value) => setAttributes({ isRandomPosts: value })}
                         />
                         
-                        <SelectControl
-                            label={__('Сортировать по', 'post-slider')}
-                            value={orderBy}
-                            options={[
-                                { label: __('Дате', 'post-slider'), value: 'date' },
-                                { label: __('Заголовку', 'post-slider'), value: 'title' },
-                                { label: __('Популярности', 'post-slider'), value: 'comment_count' }
-                            ]}
-                            onChange={(value) => setAttributes({ orderBy: value })}
-                        />
-                        
-                        {categoriesOptions.length > 0 && (
-                            <SelectControl
-                                multiple
-                                label={__('Категории', 'post-slider')}
-                                value={categories}
-                                options={categoriesOptions}
-                                onChange={(value) => setAttributes({ categories: value })}
-                            />
+                        {!isRandomPosts && (
+                            <>
+                                <SelectControl
+                                    label={__('Сортировка', 'post-slider')}
+                                    value={order}
+                                    options={[
+                                        { label: __('По убыванию', 'post-slider'), value: 'DESC' },
+                                        { label: __('По возрастанию', 'post-slider'), value: 'ASC' }
+                                    ]}
+                                    onChange={(value) => setAttributes({ order: value })}
+                                />
+                                
+                                <SelectControl
+                                    label={__('Сортировать по', 'post-slider')}
+                                    value={orderBy}
+                                    options={[
+                                        { label: __('Дате', 'post-slider'), value: 'date' },
+                                        { label: __('Заголовку', 'post-slider'), value: 'title' },
+                                        { label: __('Популярности', 'post-slider'), value: 'comment_count' }
+                                    ]}
+                                    onChange={(value) => setAttributes({ orderBy: value })}
+                                />
+                                
+                                {categoriesOptions.length > 0 && (
+                                    <SelectControl
+                                        multiple
+                                        label={__('Категории', 'post-slider')}
+                                        value={categories}
+                                        options={categoriesOptions}
+                                        onChange={(value) => setAttributes({ categories: value })}
+                                    />
+                                )}
+                            </>
                         )}
                     </PanelBody>
                 </InspectorControls>
@@ -102,7 +114,11 @@ registerBlockType(metadata.name, {
                     <div className="post-slider-editor-placeholder">
                         <h2>{__('Слайдер постов', 'post-slider')}</h2>
                         <p>{__('Отображает слайдер с последними постами блога.', 'post-slider')}</p>
-                        <p>{__(`Выбрано постов: ${postsCount}`, 'post-slider')}</p>
+                        {isRandomPosts ? (
+                            <p>{__(`Отображаются ${postsCount} случайных статей со всего сайта`, 'post-slider')}</p>
+                        ) : (
+                            <p>{__(`Выбрано постов: ${postsCount}`, 'post-slider')}</p>
+                        )}
                     </div>
                 </div>
             </div>
