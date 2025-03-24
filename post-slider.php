@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Post Slider
  * Description: Gutenberg блок для отображения слайдера с постами блога
- * Version: 1.0.0
+ * Version: 1.0.4
  * Author: DevGale
  * Text Domain: post-slider
  */
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 // Определение констант плагина
 define('POST_SLIDER_PATH', plugin_dir_path(__FILE__));
 define('POST_SLIDER_URL', plugin_dir_url(__FILE__));
-define('POST_SLIDER_VERSION', '1.0.0');
+define('POST_SLIDER_VERSION', '1.0.4');
 
 // Подключение файлов плагина
 require_once POST_SLIDER_PATH . 'includes/class-post-slider.php';
