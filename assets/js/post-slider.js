@@ -105,26 +105,24 @@
             var self = this;
             
             // Кнопки навигации
-            this.$prevBtn.on('click', function(e) {
-                e.preventDefault();
-                // Только временно останавливаем автопрокрутку при переключении
-                self.pauseAutoplay();
-                self.prevSlide();
-                // Возобновляем автопрокрутку после переключения
-                self.resumeAutoplay();
+            this.$prevBtn.on({
+                click: function(e) {
+                    e.preventDefault();
+                    self.prevSlide();
+                },
+                mouseenter: function() {
+                    self.pauseAutoplay();
+                },
+                mouseleave: function() {
+                    self.resumeAutoplay();
+                }
             });
             
-            this.$nextBtn.on('click', function(e) {
-                e.preventDefault();
-                // Только временно останавливаем автопрокрутку при переключении
-                self.pauseAutoplay();
-                self.nextSlide();
-                // Возобновляем автопрокрутку после переключения
-                self.resumeAutoplay();
-            });
-            
-            // Наведение на слайдер
-            this.$container.on({
+            this.$nextBtn.on({
+                click: function(e) {
+                    e.preventDefault();
+                    self.nextSlide();
+                },
                 mouseenter: function() {
                     self.pauseAutoplay();
                 },
@@ -136,12 +134,10 @@
             // Наведение на кнопки "ЧИТАТЬ"
             this.$readMoreBtns.on({
                 mouseenter: function(e) {
-                    e.stopPropagation();
                     self.pauseAutoplay();
                     console.log('Курсор на кнопке ЧИТАТЬ');
                 },
                 mouseleave: function(e) {
-                    e.stopPropagation();
                     self.resumeAutoplay();
                     console.log('Курсор ушел с кнопки ЧИТАТЬ');
                 }
