@@ -1,57 +1,64 @@
 # Post Slider
 
-Блок Gutenberg для создания полноэкранного слайдера постов блога.
+A Gutenberg block for creating a fullscreen blog posts slider.
 
-## Описание
+## Description
 
-Post Slider - это плагин WordPress, который добавляет блок Gutenberg для отображения полноэкранного слайдера с постами блога. Идеально подходит для размещения на главной странице сайта.
+Post Slider is a WordPress plugin that adds a Gutenberg block for displaying a fullscreen slider with blog posts. It's perfect for placement on your website's homepage.
 
-## Возможности
+## Features
 
-- Полноэкранный слайдер постов
-- Настраиваемое количество постов
-- Выбор категорий для отображения
-- Настройка сортировки постов
-- Адаптивный дизайн
-- Автоматическое переключение слайдов
-- Поддержка свайпов на мобильных устройствах
+- Fullscreen posts slider
+- Customizable number of posts
+- Category selection for display
+- Post sorting settings
+- Responsive design
+- Automatic slide switching
+- Touch swipe support on mobile devices
+- Random posts mode
+- Clean and modern design
 
-## Установка
+## Installation
 
-1. Загрузите папку с плагином в директорию `/wp-content/plugins/` вашего сайта WordPress
-2. Активируйте плагин через меню 'Плагины' в WordPress
-3. Используйте блок 'Post Slider' в редакторе Gutenberg
+1. Upload the plugin folder to the `/wp-content/plugins/` directory of your WordPress site
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Use the 'Post Slider' block in the Gutenberg editor
 
-## Использование
+## Usage
 
-1. Создайте новую страницу или отредактируйте существующую
-2. Добавьте блок 'Post Slider'
-3. Настройте параметры слайдера в боковой панели:
-   - Количество постов
-   - Порядок сортировки
-   - Критерий сортировки
-   - Категории постов для отображения
-4. Обновите страницу
+1. Create a new page or edit an existing one
+2. Add the 'Post Slider' block
+3. Configure slider parameters in the sidebar:
+   - Number of posts
+   - Sort order
+   - Sort criteria
+   - Post categories to display
+   - Enable/disable random posts mode
+4. Update the page
 
-## Требования
+## Requirements
 
-- WordPress 5.8 или выше
-- PHP 7.0 или выше
+- WordPress 5.8 or higher
+- PHP 7.0 or higher
 
-## Часто задаваемые вопросы
+## Frequently Asked Questions
 
-### Как изменить высоту слайдера?
+### How to change the slider height?
 
-Высота слайдера настраивается через CSS. По умолчанию слайдер имеет высоту 100vh (100% высоты экрана).
+The slider height can be customized through CSS. By default, the slider has a height of 100vh (100% of the viewport height).
 
-### Можно ли отключить автоматическое прокручивание слайдов?
+### Can I disable automatic slide scrolling?
 
-В текущей версии автоматическое прокручивание нельзя отключить через интерфейс. Для этого необходимо отредактировать файл `assets/js/post-slider.js`.
+In the current version, automatic scrolling cannot be disabled through the interface. To do this, you need to edit the `assets/js/post-slider.js` file.
 
-## Поддержка
+### How does the random posts mode work?
 
-Если у вас возникли проблемы с использованием плагина, пожалуйста, создайте issue в репозитории проекта.
+When random posts mode is enabled, the slider will display random posts from your entire site, ignoring the sorting and category settings. This is useful for showcasing diverse content from your blog.
 
-## Лицензия
+## Support
 
-GPL v2 или более поздняя версия 
+If you encounter any issues while using the plugin, please create an issue in the project repository.
+
+## License
+
+GPL v2 or later 
