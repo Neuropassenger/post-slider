@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Post Slider
  * Description: Gutenberg block for displaying blog posts slider
- * Version: 1.0.21
+ * Version: 1.0.32
  * Author: Oleg Sokolov
  * Text Domain: post-slider
  */
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 // Define plugin constants
 define('POST_SLIDER_PATH', plugin_dir_path(__FILE__));
 define('POST_SLIDER_URL', plugin_dir_url(__FILE__));
-define('POST_SLIDER_VERSION', '1.0.21');
+define('POST_SLIDER_VERSION', '1.0.32');
 
 // Include plugin files
 require_once POST_SLIDER_PATH . 'includes/class-post-slider.php';
