@@ -1,31 +1,31 @@
 /**
- * JavaScript для работы слайдера постов
+ * JavaScript for posts slider functionality
  */
 (function($) {
     'use strict';
     
-    // Конструктор слайдера
+    // Slider constructor
     function PostSlider(options) {
-        // Настройки по умолчанию
+        // Default settings
         this.settings = $.extend({
-            slideDuration: 10000,      // Время показа слайда (10 секунд)
-            animationDuration: 1200,   // Длительность базовой анимации (возвращаем к 1200)
+            slideDuration: 10000,      // Slide display time (10 seconds)
+            animationDuration: 1200,   // Base animation duration (back to 1200)
             container: '.post-slider',
             slideSelector: '.post-slide',
             prevBtn: '.post-slider-prev',
             nextBtn: '.post-slider-next',
             readMoreBtn: '.post-slide-read-more',
-            autoplay: true             // Автоматическое переключение по умолчанию
+            autoplay: true             // Autoplay enabled by default
         }, options || {});
         
-        // Инициализация переменных
+        // Initialize variables
         this.$container = $(this.settings.container);
         this.$slides = this.$container.find(this.settings.slideSelector);
         this.$prevBtn = $(this.settings.prevBtn);
         this.$nextBtn = $(this.settings.nextBtn);
         this.$readMoreBtns = $(this.settings.readMoreBtn);
         
-        // Состояние слайдера
+        // Slider state
         this.currentIndex = 0;
         this.totalSlides = this.$slides.length;
         this.isAnimating = false;
@@ -33,23 +33,23 @@
         this.autoplayEnabled = this.settings.autoplay;
         this.autoplayPaused = false;
         
-        // Инициализация, если есть слайды
+        // Initialize if there are slides
         if (this.totalSlides > 0) {
             this.init();
         }
     }
     
-    // Методы слайдера
+    // Slider methods
     PostSlider.prototype = {
-        // Инициализация слайдера
+        // Initialize slider
         init: function() {
             this.setupSlides();
             this.bindEvents();
             
-            // Показываем первый слайд сразу же делаем его видимым с эффектом отдаления
+            // Show first slide immediately with zoom out effect
             var $firstSlide = this.$slides.eq(0);
             
-            // Устанавливаем начальное состояние
+            // Set initial state
             $firstSlide.css({
                 'opacity': '0',
                 'z-index': '2',
@@ -58,11 +58,11 @@
                 'transition': 'none'
             });
             
-            // Принудительная перерисовка
+            // Force reflow
             this.$container[0].offsetHeight;
             
-            // Запускаем анимацию для первого слайда
-            var zoomOutDuration = this.settings.slideDuration; // Изменяем на длительность отображения слайда
+            // Start animation for first slide
+            var zoomOutDuration = this.settings.slideDuration; // Change to slide display duration
             
             $firstSlide.css({
                 'transition': 'opacity ' + this.settings.animationDuration + 'ms ease, transform ' + 
@@ -75,15 +75,15 @@
             
             this.currentIndex = 0;
             
-            // Запускаем автопрокрутку, если она включена
+            // Start autoplay if enabled
             if (this.autoplayEnabled) {
                 this.startAutoplay();
             }
             
-            console.log('Слайдер инициализирован');
+            console.log('Slider initialized');
         },
         
-        // Настройка слайдов
+        // Setup slides
         setupSlides: function() {
             var self = this;
             
@@ -100,11 +100,11 @@
             });
         },
         
-        // Привязка обработчиков событий
+        // Bind event handlers
         bindEvents: function() {
             var self = this;
             
-            // Кнопки навигации
+            // Navigation buttons
             this.$prevBtn.on({
                 click: function(e) {
                     e.preventDefault();
@@ -131,19 +131,19 @@
                 }
             });
             
-            // Наведение на кнопки "ЧИТАТЬ"
+            // Hover on "READ" buttons
             this.$readMoreBtns.on({
                 mouseenter: function(e) {
                     self.pauseAutoplay();
-                    console.log('Курсор на кнопке ЧИТАТЬ');
+                    console.log('Cursor on READ button');
                 },
                 mouseleave: function(e) {
                     self.resumeAutoplay();
-                    console.log('Курсор ушел с кнопки ЧИТАТЬ');
+                    console.log('Cursor left READ button');
                 }
             });
             
-            // Обработка видимости страницы
+            // Handle page visibility
             $(document).on('visibilitychange', function() {
                 if (document.hidden) {
                     self.pauseAutoplay();
@@ -152,11 +152,11 @@
                 }
             });
             
-            // Обработка свайпов
+            // Handle swipes
             this.setupTouchEvents();
         },
         
-        // Настройка событий касания
+        // Setup touch events
         setupTouchEvents: function() {
             var self = this;
             var touchStartX = 0;
@@ -170,7 +170,7 @@
                 var diffX = touchStartX - touchEndX;
                 
                 if (Math.abs(diffX) > 50) {
-                    // Временно останавливаем автопрокрутку при свайпе
+                    // Temporarily pause autoplay on swipe
                     self.pauseAutoplay();
                     
                     if (diffX > 0) {
@@ -179,13 +179,13 @@
                         self.prevSlide();
                     }
                     
-                    // Возобновляем автопрокрутку после свайпа
+                    // Resume autoplay after swipe
                     self.resumeAutoplay();
                 }
             });
         },
         
-        // Показ определенного слайда
+        // Show specific slide
         showSlide: function(index) {
             if (this.isAnimating || index === this.currentIndex) return;
             
@@ -195,7 +195,7 @@
             this.animateSlideTransition(prevIndex, this.currentIndex);
         },
         
-        // Переход к следующему слайду
+        // Go to next slide
         nextSlide: function() {
             if (this.isAnimating || this.totalSlides <= 1) return;
             
@@ -203,7 +203,7 @@
             this.showSlide(nextIndex);
         },
         
-        // Переход к предыдущему слайду
+        // Go to previous slide
         prevSlide: function() {
             if (this.isAnimating || this.totalSlides <= 1) return;
             
@@ -211,7 +211,7 @@
             this.showSlide(prevIndex);
         },
         
-        // Анимация перехода между слайдами
+        // Animate slide transition
         animateSlideTransition: function(fromIndex, toIndex) {
             var self = this;
             this.isAnimating = true;
@@ -219,19 +219,19 @@
             var $currentSlide = this.$slides.eq(fromIndex);
             var $nextSlide = this.$slides.eq(toIndex);
             
-            // Подготовка нового слайда - начнем с увеличенного вида для эффекта отдаления
+            // Prepare new slide - start with zoomed view for zoom out effect
             $nextSlide.css({
                 'opacity': '0',
                 'z-index': '2',
-                'transform': 'scale(1.15)', // Начинаем с увеличенного масштаба для эффекта отдаления
+                'transform': 'scale(1.15)', // Start with larger scale for zoom out effect
                 'filter': 'blur(5px)',
                 'transition': 'none'
             });
             
-            // Принудительная перерисовка
+            // Force reflow
             this.$container[0].offsetHeight;
             
-            // Анимация текущего слайда
+            // Animate current slide
             $currentSlide.css({
                 'transition': 'opacity ' + this.settings.animationDuration + 'ms ease, transform ' + 
                                this.settings.animationDuration + 'ms ease, filter ' + 
@@ -242,56 +242,56 @@
                 'z-index': '1'
             });
             
-            // Анимация нового слайда - добавляем медленное отдаление
-            var zoomOutDuration = this.settings.slideDuration; // Изменяем на длительность отображения слайда
+            // Animate new slide - add slow zoom out
+            var zoomOutDuration = this.settings.slideDuration; // Change to slide display duration
             
             $nextSlide.css({
                 'transition': 'opacity ' + this.settings.animationDuration + 'ms ease, transform ' + 
                                zoomOutDuration + 'ms cubic-bezier(0.01, 0.01, 0.05, 0.95), filter ' + 
-                               this.settings.animationDuration + 'ms ease', // Используем cubic-bezier для плавного замедления
+                               this.settings.animationDuration + 'ms ease', // Use cubic-bezier for smooth deceleration
                 'opacity': '1',
-                'transform': 'scale(1)', // Конечный масштаб 1, создавая эффект отдаления
+                'transform': 'scale(1)', // Final scale 1, creating zoom out effect
                 'filter': 'blur(0)'
             }).addClass('active');
             
-            // Завершение анимации
+            // Complete animation
             setTimeout(function() {
                 $currentSlide.removeClass('active').css({
                     'transition': 'none'
                 });
                 
                 self.isAnimating = false;
-                console.log('Переход завершен: ' + fromIndex + ' -> ' + toIndex);
-            }, this.settings.animationDuration); // Используем обычную длительность анимации
+                console.log('Transition completed: ' + fromIndex + ' -> ' + toIndex);
+            }, this.settings.animationDuration); // Use regular animation duration
         },
         
-        // Запуск автопрокрутки
+        // Start autoplay
         startAutoplay: function() {
             var self = this;
             
-            // Останавливаем предыдущий таймер, если он есть
+            // Stop previous timer if exists
             this.stopAutoplay();
             
-            // Запускаем только если автопрокрутка включена и не на паузе
+            // Start only if autoplay is enabled and not paused
             if (!this.autoplayEnabled || this.autoplayPaused) {
                 return;
             }
             
-            console.log('Автопрокрутка запущена');
+            console.log('Autoplay started');
             this.autoplayTimer = setTimeout(function autoplayTick() {
-                // Проверяем, должна ли продолжаться автопрокрутка
+                // Check if autoplay should continue
                 if (!self.autoplayEnabled || self.autoplayPaused) {
                     return;
                 }
                 
                 self.nextSlide();
                 
-                // Планируем следующее переключение
+                // Schedule next switch
                 self.autoplayTimer = setTimeout(autoplayTick, self.settings.slideDuration);
             }, this.settings.slideDuration);
         },
         
-        // Остановка автопрокрутки
+        // Stop autoplay
         stopAutoplay: function() {
             if (this.autoplayTimer) {
                 clearTimeout(this.autoplayTimer);
@@ -299,35 +299,35 @@
             }
         },
         
-        // Полное отключение автопрокрутки 
+        // Completely disable autoplay
         disableAutoplay: function() {
-            console.log('Автопрокрутка отключена навсегда');
+            console.log('Autoplay disabled permanently');
             this.autoplayEnabled = false;
             this.stopAutoplay();
         },
         
-        // Временная пауза автопрокрутки
+        // Temporarily pause autoplay
         pauseAutoplay: function() {
             if (this.autoplayEnabled && !this.autoplayPaused) {
-                console.log('Автопрокрутка на паузе');
+                console.log('Autoplay paused');
                 this.autoplayPaused = true;
                 this.stopAutoplay();
             }
         },
         
-        // Возобновление автопрокрутки
+        // Resume autoplay
         resumeAutoplay: function() {
             if (this.autoplayEnabled && this.autoplayPaused) {
-                console.log('Автопрокрутка возобновлена');
+                console.log('Autoplay resumed');
                 this.autoplayPaused = false;
                 this.startAutoplay();
             }
         }
     };
     
-    // Инициализация слайдера при загрузке страницы
+    // Initialize slider when page loads
     $(document).ready(function() {
-        // Создаем экземпляр слайдера
+        // Create slider instance
         window.postSlider = new PostSlider();
     });
     
