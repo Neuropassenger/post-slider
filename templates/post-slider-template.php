@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
                 <div class="post-slide-background" style="background-image: url('<?php echo esc_url($featured_image); ?>');">
                     <div class="post-slide-content">
                         <div class="post-slide-date"><?php echo esc_html($post_date); ?></div>
-                        <h2 class="post-slide-title"><?php echo esc_html($post_title); ?></h2>
+                        <h3 class="post-slide-title"><?php echo esc_html($post_title); ?></h3>
                         <div class="post-slide-button">
                             <a href="<?php echo esc_url($post_permalink); ?>" class="post-slide-read-more">ЧИТАТЬ</a>
                         </div>
